@@ -77,6 +77,7 @@ def run_workflow():
     print(f"Customer: {workflow['customer']}")
     print(f"Action: {workflow['action']}")
     print(f"Status: {workflow['status']}")
+    print(f"AI Plan: {workflow['ai_plan']['plan']}")
 
 
 def main():
