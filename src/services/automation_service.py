@@ -25,3 +25,6 @@ def create_automation_task(customer, task):
     save_tasks(tasks)
 
     return new_task
+
+def get_all_tasks():
+    return load_tasks()
