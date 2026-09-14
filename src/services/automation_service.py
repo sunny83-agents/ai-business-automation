@@ -1,3 +1,6 @@
+from data_store import load_tasks, save_tasks
+
+
 def create_automation_task(customer, task):
     if not customer.strip():
         raise ValueError("Customer name cannot be empty.")
@@ -5,8 +8,15 @@ def create_automation_task(customer, task):
     if not task.strip():
         raise ValueError("Automation task cannot be empty.")
 
-    return {
+    tasks = load_tasks()
+
+    new_task = {
         "customer": customer.strip(),
         "task": task.strip(),
         "status": "ready"
     }
+
+    tasks.append(new_task)
+    save_tasks(tasks)
+
+    return new_task
