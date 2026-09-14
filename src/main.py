@@ -4,6 +4,8 @@ from services.automation_service import (
     update_task_status,
 )
 
+from workflow.automation_workflow import prepare_workflow
+
 
 def create_task():
     customer = input("Customer name: ")
@@ -20,7 +22,6 @@ def create_task():
     print(f"Customer: {result['customer']}")
     print(f"Task: {result['task']}")
     print(f"Status: {result['status']}")
-    print(f"Created: {result['created_at']}")
 
 
 def list_tasks():
@@ -56,11 +57,34 @@ def change_task_status():
     print(f"Status: {result['status']}")
 
 
+def run_workflow():
+    tasks = get_all_tasks()
+
+    if not tasks:
+        print("\nNo automation tasks found.")
+        return
+
+    task = tasks[-1]
+
+    try:
+        workflow = prepare_workflow(task)
+    except ValueError as error:
+        print(f"\nError: {error}")
+        return
+
+    print("\nWorkflow prepared:")
+    print(f"Task ID: {workflow['task_id']}")
+    print(f"Customer: {workflow['customer']}")
+    print(f"Action: {workflow['action']}")
+    print(f"Status: {workflow['status']}")
+
+
 def main():
     print("\nAI Business Automation")
     print("1. Create task")
     print("2. List tasks")
     print("3. Update task status")
+    print("4. Prepare workflow")
 
     choice = input("\nChoose an option: ")
 
@@ -70,6 +94,8 @@ def main():
         list_tasks()
     elif choice == "3":
         change_task_status()
+    elif choice == "4":
+        run_workflow()
     else:
         print("\nInvalid option.")
 
