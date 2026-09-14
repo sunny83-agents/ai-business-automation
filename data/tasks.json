@@ -10,7 +10,7 @@
         "id": "23d020bd-3555-4922-a6a1-9fec540ff638",
         "customer": "ABC Solutions",
         "task": "Send a proposal follow-up",
-        "status": "ready",
+        "status": "completed",
         "created_at": "2026-09-14T14:17:32.688960+00:00"
     }
 ]

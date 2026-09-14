@@ -1,6 +1,7 @@
 from services.automation_service import (
     create_automation_task,
     get_all_tasks,
+    update_task_status,
 )
 
 
@@ -39,10 +40,27 @@ def list_tasks():
         print(f"Created: {task['created_at']}")
 
 
+def change_task_status():
+    task_id = input("Task ID: ")
+    new_status = input("New status (ready/in_progress/completed): ")
+
+    try:
+        result = update_task_status(task_id, new_status)
+    except ValueError as error:
+        print(f"\nError: {error}")
+        return
+
+    print("\nTask status updated:")
+    print(f"ID: {result['id']}")
+    print(f"Customer: {result['customer']}")
+    print(f"Status: {result['status']}")
+
+
 def main():
     print("\nAI Business Automation")
     print("1. Create task")
     print("2. List tasks")
+    print("3. Update task status")
 
     choice = input("\nChoose an option: ")
 
@@ -50,6 +68,8 @@ def main():
         create_task()
     elif choice == "2":
         list_tasks()
+    elif choice == "3":
+        change_task_status()
     else:
         print("\nInvalid option.")
 

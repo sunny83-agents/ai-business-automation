@@ -2,7 +2,8 @@ import json
 from pathlib import Path
 
 
-DATA_FILE = Path("data/tasks.json")
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+DATA_FILE = PROJECT_ROOT / "data" / "tasks.json"
 
 
 def save_tasks(tasks):
