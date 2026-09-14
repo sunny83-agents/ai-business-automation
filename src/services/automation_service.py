@@ -1,3 +1,6 @@
+from datetime import datetime, timezone
+from uuid import uuid4
+
 from data_store import load_tasks, save_tasks
 
 
@@ -11,9 +14,11 @@ def create_automation_task(customer, task):
     tasks = load_tasks()
 
     new_task = {
+        "id": str(uuid4()),
         "customer": customer.strip(),
         "task": task.strip(),
-        "status": "ready"
+        "status": "ready",
+        "created_at": datetime.now(timezone.utc).isoformat()
     }
 
     tasks.append(new_task)
