@@ -5,13 +5,16 @@ def prepare_workflow(task):
     if not task:
         raise ValueError("Task cannot be empty.")
 
+    ai_plan = generate_automation_plan(task)
+
     workflow = {
         "task_id": task["id"],
         "customer": task["customer"],
         "action": task["task"],
-        "status": "ready"
+        "status": "ready",
+        "steps": ai_plan["steps"],
+        "expected_outcome": ai_plan["expected_outcome"],
+        "ai_plan": ai_plan,
     }
-
-    workflow["ai_plan"] = generate_automation_plan(task)
 
     return workflow
