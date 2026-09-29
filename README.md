@@ -1,22 +1,25 @@
-# AI Business Automation
+## AI Planning
 
-A modular Python application that demonstrates how AI-assisted business automation can be structured as a complete workflow — from customer requests to planning, execution, and result tracking.
+The current AI layer uses deterministic planning logic to transform a business request into a structured automation plan.
 
-## Overview
+For each request, it produces:
 
-This project simulates an automation system for small businesses.
+- A normalized business goal
+- A sequence of automation steps
+- An expected outcome
+- A planning status
 
-A business task moves through four stages:
+This architecture is intentionally separated from the workflow and execution layers, making it possible to replace the deterministic planner with an LLM-powered implementation later without redesigning the rest of the application.
 
-```text
-Business Request
-       ↓
-Task Management
-       ↓
-AI Planning
-       ↓
-Workflow Preparation
-       ↓
-Workflow Execution
-       ↓
-Completed Result
+## Test Results
+
+The project currently includes **7 automated tests**, covering:
+
+- AI plan generation
+- Input validation
+- Workflow preparation
+- Workflow validation
+- Workflow execution
+- Execution validation
+
+All tests are currently passing.
