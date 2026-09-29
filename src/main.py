@@ -5,6 +5,7 @@ from services.automation_service import (
 )
 
 from workflow.automation_workflow import prepare_workflow
+from services.execution_service import execute_workflow
 
 
 def create_task():
@@ -72,12 +73,46 @@ def run_workflow():
         print(f"\nError: {error}")
         return
 
-    print("\nWorkflow prepared:")
+    print("\nAI Workflow prepared:")
     print(f"Task ID: {workflow['task_id']}")
     print(f"Customer: {workflow['customer']}")
     print(f"Action: {workflow['action']}")
     print(f"Status: {workflow['status']}")
-    print(f"AI Plan: {workflow['ai_plan']['plan']}")
+
+    print("\nAI Plan:")
+    for number, step in enumerate(workflow["steps"], start=1):
+        print(f"{number}. {step}")
+
+    print(f"\nExpected outcome: {workflow['expected_outcome']}")
+
+
+def execute_latest_workflow():
+    tasks = get_all_tasks()
+
+    if not tasks:
+        print("\nNo automation tasks found.")
+        return
+
+    task = tasks[-1]
+
+    try:
+        workflow = prepare_workflow(task)
+        result = execute_workflow(workflow)
+    except ValueError as error:
+        print(f"\nError: {error}")
+        return
+
+    print("\nWorkflow executed successfully:")
+    print(f"Task ID: {result['task_id']}")
+    print(f"Customer: {result['customer']}")
+    print(f"Status: {result['status']}")
+
+    print("\nCompleted steps:")
+    for number, step in enumerate(result["completed_steps"], start=1):
+        print(f"{number}. {step['step']}")
+
+    print(f"\nResult: {result['result']}")
+    print(f"Executed at: {result['executed_at']}")
 
 
 def main():
@@ -85,7 +120,8 @@ def main():
     print("1. Create task")
     print("2. List tasks")
     print("3. Update task status")
-    print("4. Prepare workflow")
+    print("4. Prepare AI workflow")
+    print("5. Execute latest workflow")
 
     choice = input("\nChoose an option: ")
 
@@ -97,6 +133,8 @@ def main():
         change_task_status()
     elif choice == "4":
         run_workflow()
+    elif choice == "5":
+        execute_latest_workflow()
     else:
         print("\nInvalid option.")
 
